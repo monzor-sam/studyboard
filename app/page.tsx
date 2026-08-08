@@ -1,13 +1,18 @@
+import GroupCard from "@/components/GroupCard";
+import { getGroups } from "@/lib/data";
+
 export default function Home() {
+  const groups = getGroups();
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            Welcome to Samie's StudyBoard.
-          </h1>
-        </div>
-      </main>
-    </div>
+    <main className="flex flex-col items-center justify-center p-24">
+      <h1 className="text-4xl font-bold text-pink-500">Welcome to StudyBoard.</h1>
+      <p className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      </p>
+      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {groups.map((group) => (
+          <GroupCard key={group.id} group={group} />
+        ))}
+      </div>
+    </main>
   );
 }
