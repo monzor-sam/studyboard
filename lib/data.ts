@@ -91,3 +91,75 @@ export function getTasksByGroupId(id: string): Task[] {
 export function getMembersByGroupId(id: string): Member[] {
   return getGroupById(id)?.members ?? [];
 }
+
+let nextGroupId = groups.length + 1;
+let nextTaskId =
+  groups.flatMap((g) => g.tasks).length + 1;
+
+export function createGroup(input: {
+  name: string;
+  subject: string;
+  memberCount?: number;
+}): Group {
+  const newGroup: Group = {
+    id: String(nextGroupId++),
+    name: input.name,
+    subject: input.subject,
+    memberCount: input.memberCount ?? 0,
+    members: [],
+    tasks: [],
+  };
+  groups.push(newGroup);
+  return newGroup;
+}
+
+export function updateGroup(
+  id: string,
+  updates: Partial<Pick<Group, "name" | "subject" | "memberCount">>
+): Group | undefined {
+  const group = getGroupById(id);
+  if (!group) return undefined;
+  Object.assign(group, updates);
+  return group;
+}
+
+export function deleteGroup(id: string): boolean {
+  const index = groups.findIndex((g) => g.id === id);
+  if (index === -1) return false;
+  groups.splice(index, 1);
+  return true;
+}
+
+export function createTask(groupId: string, title: string): Task | undefined {
+  const group = getGroupById(groupId);
+  if (!group) return undefined;
+  const newTask: Task = {
+    id: `t${nextTaskId++}`,
+    title,
+    done: false,
+  };
+  group.tasks.push(newTask);
+  return newTask;
+}
+
+export function updateTask(
+  groupId: string,
+  taskId: string,
+  updates: Partial<Pick<Task, "title" | "done">>
+): Task | undefined {
+  const group = getGroupById(groupId);
+  if (!group) return undefined;
+  const task = group.tasks.find((t) => t.id === taskId);
+  if (!task) return undefined;
+  Object.assign(task, updates);
+  return task;
+}
+
+export function deleteTask(groupId: string, taskId: string): boolean {
+  const group = getGroupById(groupId);
+  if (!group) return false;
+  const index = group.tasks.findIndex((t) => t.id === taskId);
+  if (index === -1) return false;
+  group.tasks.splice(index, 1);
+  return true;
+}
