@@ -1,5 +1,22 @@
+<<<<<<< HEAD
 # dependencies
 /node_modules
+=======
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+>>>>>>> 641aad2650ce991ae14c58f433dc2a40c0546a92
 
 # next.js
 /.next/
@@ -12,14 +29,31 @@
 .DS_Store
 *.pem
 
+<<<<<<< HEAD
 # env files
 .env*
 !.env.example
+=======
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+>>>>>>> 641aad2650ce991ae14c58f433dc2a40c0546a92
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+<<<<<<< HEAD
 
 # prisma
 /prisma/dev.db
 /prisma/dev.db-journal
+=======
+>>>>>>> 641aad2650ce991ae14c58f433dc2a40c0546a92

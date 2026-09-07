@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -30,10 +31,34 @@ export async function POST(request: Request) {
   if (!body.name || !body.subject) {
     return NextResponse.json(
       { error: "'name' and 'subject' are required" },
+=======
+import { NextRequest, NextResponse } from "next/server";
+import { getGroups, createGroup } from "@/lib/data";
+
+// GET /api/groups — return all groups
+export async function GET() {
+  return NextResponse.json(getGroups());
+}
+
+// POST /api/groups — create a group
+export async function POST(request: NextRequest) {
+  const body = await request.json();
+
+  if (typeof body.name !== "string" || body.name.trim() === "") {
+    return NextResponse.json(
+      { error: "name is required and must be a non-empty string" },
+      { status: 400 }
+    );
+  }
+  if (typeof body.subject !== "string" || body.subject.trim() === "") {
+    return NextResponse.json(
+      { error: "subject is required and must be a non-empty string" },
+>>>>>>> 641aad2650ce991ae14c58f433dc2a40c0546a92
       { status: 400 }
     );
   }
 
+<<<<<<< HEAD
   // TODO: replace this — a group currently has no owner, which will
   // throw a Prisma error since ownerId is required in the schema.
   const newGroup = await createGroup({
@@ -45,3 +70,13 @@ export async function POST(request: Request) {
 
   return NextResponse.json(newGroup, { status: 201 });
 }
+=======
+  const group = createGroup({
+    name: body.name,
+    subject: body.subject,
+    memberCount: typeof body.memberCount === "number" ? body.memberCount : undefined,
+  });
+
+  return NextResponse.json(group, { status: 201 });
+}
+>>>>>>> 641aad2650ce991ae14c58f433dc2a40c0546a92
